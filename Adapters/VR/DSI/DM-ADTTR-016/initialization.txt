@@ -1,0 +1,97 @@
+
+force_trubo=1
+#设置为1不做保修
+gpu_freq=300
+core_freq=400
+#性能方面
+
+# HDMI 婎杮愝掕 Basic configuration
+hdmi_pixel_freq_limit=400000000
+hdmi_timings=1440 0 50 8 15 1440 0 8 2 6 0 0 0 60 0 132180000 0
+hdmi_drive=2
+disable_overscan=1
+max_framebuffer_width=2560
+max_framebuffer_height=2560
+
+# Portrait or Landscape Setting
+#Portrait-1 (僼儗僉偑壓, Flexible cable is bottom side.)
+display_rotate=0
+framebuffer_width=1440
+framebuffer_height=1440
+
+# Landscape-1 (僼儗僉偑塃, Flexible cable is right side.)
+#display_rotate=1
+#framebuffer_width=1920
+#framebuffer_height=1200
+
+# Portrait-2 (僼儗僉偑忋, Flexible cable is upper side.)
+#display_rotate=2
+#framebuffer_width=1200
+#framebuffer_height=1920
+
+# Landscape-2 (僼儗僉偑嵍, Flexible cable is left side.)
+#display_rotate=3
+#framebuffer_width=1920
+#framebuffer_height=1200
+
+# 埲壓偼僆儕僕僫儖config.txt (RASPBIAN JESSIE, November 2015) 偺撪梕
+# Original contents of config.txt (RASPBIAN JESSIE, November 2015) is as follows.
+
+# For more options and information see
+# http://www.raspberrypi.org/documentation/configuration/config-txt.md
+# Some settings may impact device functionality. See link above for details
+
+# uncomment if you get no picture on HDMI for a default "safe" mode
+# hdmi_safe=1
+
+# uncomment this if your display has a black border of unused pixels visible
+# and your display can output without overscan
+#disable_overscan=1
+
+# uncomment the following to adjust overscan. Use positive numbers if console
+# goes off screen, and negative if there is too much border
+#overscan_left=16
+#overscan_right=16
+#overscan_top=16
+#overscan_bottom=16
+
+# uncomment to force a console size. By default it will be display's size minus
+# overscan.
+#framebuffer_width=1280
+#framebuffer_height=720
+
+# uncomment if hdmi display is not detected and composite is being output
+#hdmi_force_hotplug=1
+
+# uncomment to force a specific HDMI mode (this will force VGA)
+#hdmi_group=1
+#hdmi_mode=1
+
+# uncomment to force a HDMI mode rather than DVI. This can make audio work in
+# DMT (computer monitor) modes
+#hdmi_drive=2
+
+# uncomment to increase signal to HDMI, if you have interference, blanking, or
+# no display
+#config_hdmi_boost=4
+
+# uncomment for composite PAL
+#sdtv_mode=2
+
+#uncomment to overclock the arm. 700 MHz is the default.
+#arm_freq=800
+
+# Uncomment some or all of these to enable the optional hardware interfaces
+#dtparam=i2c_arm=on
+#dtparam=i2s=on
+#dtparam=spi=on
+
+# Uncomment this to enable the lirc-rpi module
+#dtoverlay=lirc-rpi
+
+# Additional overlays and parameters are documented /boot/overlays/README
+
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=off
+
+
