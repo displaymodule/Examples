@@ -1,0 +1,184 @@
+NOTE:VCI=3.3V
+//**************Command********************************
+void write_command(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=0;
+ 	 P2=i>>8;
+	 P0=i;
+	 rw=0;
+	 rw=1;
+	 cs=1;
+}
+//****************Data*************************
+void write_data(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=1;
+	 P2=i>>8;
+	 P0=i;
+	 rw=0;;
+	 rw=1;
+	 cs=1;
+}
+//********************Display data*****************************
+void write_data1(byte data_h,data_l)
+{
+   cs=0;
+   rs=1;
+   rd=1;
+   P2=data_h;
+   P0=data_l;
+   rw=0;
+   rw=1;
+   cs=1;
+}
+/*************************************************/
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//**************************//LCD SETING
+write_command(0xCF);
+write_data(0x00);
+write_data(0xc1);
+write_data(0X30);
+
+write_command(0xED);
+write_data(0x64);
+write_data(0x03);
+write_data(0X12);
+write_data(0X81);
+
+write_command(0xE8);
+write_data(0x85);
+write_data(0x00);
+write_data(0x78);
+
+write_command(0xCB);
+write_data(0x39);
+write_data(0x2C);
+write_data(0x00);
+write_data(0x34);
+write_data(0x02);
+
+write_command(0xF7);
+write_data(0x20);
+
+write_command(0xEA);
+write_data(0x00);
+write_data(0x00);
+
+write_command(0xC0);    //Power control
+write_data(0x21);   //VRH[5:0]
+
+write_command(0xC1);    //Power control
+write_data(0x11);   //SAP[2:0];BT[3:0]
+
+write_command(0xC5);    //VCM control
+write_data(0x31);
+write_data(0x3f);
+
+write_command(0xC7);    //VCM control2
+write_data(0x93);
+
+write_command(0x36);    // Memory Access Control
+write_data(0x08);
+
+write_command(0x3A);
+write_data(0x55);
+
+write_command(0xB1);
+write_data(0x00);
+write_data(0x17);
+
+write_command(0xB6);    // Display Function Control
+write_data(0x0A);
+write_data(0xA2);
+
+write_command(0xF2);    // 3Gamma Function Disable
+write_data(0x00);
+
+write_command(0x26);    //Gamma curve selected
+write_data(0x01);
+
+write_command(0xE0);    //Set Gamma
+write_data(0x0F);
+write_data(0x1f);
+write_data(0x1D);
+write_data(0x09);
+write_data(0x0B);
+write_data(0x04);
+write_data(0x4E);
+write_data(0X92);
+write_data(0x40);
+write_data(0x0A);
+write_data(0x15);
+write_data(0x07);
+write_data(0x14);
+write_data(0x06);
+write_data(0x0F);
+
+write_command(0XE1);    //Set Gamma
+write_data(0x00);
+write_data(0x1C);
+write_data(0x1F);
+write_data(0x03);
+write_data(0x0F);
+write_data(0x05);
+write_data(0x37);
+write_data(0x24);
+write_data(0x4C);
+write_data(0x04);
+write_data(0x0E);
+write_data(0x0C);
+write_data(0x30);
+write_data(0x34);
+write_data(0x0F);
+//**************************************************************
+write_command(0x2A);//set_column_address //240
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+write_data(0xEF);
+
+write_command(0x2B);// set_page_address //320
+write_data(0x00);
+write_data(0x00);
+write_data(0x01);
+write_data(0x3f);
+
+write_command(0x11);//exit_sleep_mode
+delay(120);
+write_command(0x29);//set_display_on
+delay(25);
+write_command(0x2c);//send DDRAM set
+
+  }
+
+//*********************************************************************************************
+void EnterSleep (void)
+{
+    write_command(0x28);
+    delay(20);
+    write_command(0x10);
+
+  }
+
+//*********************************************************
+void ExitSleep (void)
+
+ {
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+
+   }
+
+
