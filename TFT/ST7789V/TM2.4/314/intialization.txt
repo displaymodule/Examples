@@ -1,0 +1,160 @@
+//VCI=4.3V,choice 8 or 16 bit according to IM set.
+//*********************16BIT*********************************
+void write_command(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=0;
+ 	 P2=i>>8;
+	 P0=i;
+	 rw=0;
+	 rw=1;
+	 cs=1;
+}
+
+void write_data(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=1;
+	 P2=i>>8;
+	 P0=i;
+	 rw=0;;
+	 rw=1;
+	 cs=1;
+}
+//********************8BIT****************************************
+void write_command(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=0;
+ 	 P2=i;
+	 rw=0;
+	 rw=1;
+	 cs=1;
+}
+
+void write_data(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=1;
+	 P2=i>>8;
+	 P2=i;
+	 rw=0;;
+	 rw=1;
+	 cs=1;
+}
+/*************************************************/
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//--------------------------------ST7789S Frame rate setting----------------------------------//
+write_command(0xb2);
+write_data(0x0c);
+write_data(0x0c);
+write_data(0x00);
+write_data(0x33);
+write_data(0x33);
+
+write_command(0xb7);
+write_data(0x35);
+
+write_command(0x36);
+write_data(0x00);
+//---------------------------------ST7789S Power setting--------------------------------------//
+write_command(0xbb);
+write_data(0x30);//vcom
+
+write_command(0xc3);
+write_data(0x1C);
+
+write_command(0xc4);
+write_data(0x18);
+
+write_command(0xc6);
+write_data(0x0f);
+
+write_command(0xd0);
+write_data(0xa4);
+write_data(0xa2);
+//--------------------------------ST7789S gamma setting---------------------------------------//
+write_command(0xe0);
+write_data(0xf0);
+write_data(0x00);
+write_data(0x0a);
+write_data(0x10);
+write_data(0x12);
+write_data(0x1b);
+write_data(0x39);
+write_data(0x44);
+write_data(0x47);
+write_data(0x28);
+write_data(0x12);
+write_data(0x10);
+write_data(0x16);
+write_data(0x1b);
+
+write_command(0xe1);
+write_data(0xf0);
+write_data(0x00);
+write_data(0x0a);
+write_data(0x10);
+write_data(0x11);
+write_data(0x1a);
+write_data(0x3b);
+write_data(0x34);
+write_data(0x4e);
+write_data(0x3a);
+write_data(0x17);
+write_data(0x16);
+write_data(0x21);
+write_data(0x22);
+
+write_command(0x3a);
+write_data(0x55); //18 MCU ,55-16BIT MCU
+//***********����****************************
+write_command(0x2A); //Frame rate control
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+write_data(0xEF);
+
+write_command(0x2B); //Display function control
+write_data(0x00);
+write_data(0x00);
+write_data(0x01);
+write_data(0x3F);
+
+write_command(0x11);
+delay(120);      //Delay 120ms
+
+write_command(0x29); //display on
+write_command(0x2c);
+
+  }
+
+//*********************************************************************************************
+void EnterSleep (void)
+{
+    write_command(0x28);
+    delay(20);
+    write_command(0x10);
+
+  }
+
+//*********************************************************
+void ExitSleep (void)
+
+ {
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+
+   }
