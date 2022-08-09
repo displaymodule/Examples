@@ -1,0 +1,165 @@
+NOTE:VCI=3.3V,use RGB interface must use SPI initialized to the LCD.
+//****************************************************************
+void write_command (unsigned char y) // (uchar y,uchar x)
+{
+  unsigned char i;
+csb=0;
+sclb=0;
+sdi=0;
+sclb=1;
+for(i=0;i<8;i++)
+    {
+     sclb=0;
+      if (y&0x80)
+       {
+          sdi=1;
+        }
+          else
+         {
+          sdi=0;
+         }
+       sclb=1;
+      y=y<<1;
+    }
+csb=1;
+}
+//***************************************************************
+void write_data(unsigned char w) // (uchar w, uchar v)
+{
+  unsigned char i;
+csb=0;
+sclb=0;
+sdi=1;
+sclb=1;
+for(i=0;i<8;i++)
+ {
+  sclb=0;
+     if (w&0x80)
+     {
+        sdi=1;
+       }
+          else
+        {
+         sdi=0;
+        }
+   sclb=1;
+   w=w<<1;
+    }
+csb=1;
+}
+//**************LCD*******************************
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//--------------------------------ST7789S Frame rate setting----------------------------------//
+write_command(0xb2);
+write_data(0x0c);
+write_data(0x0c);
+write_data(0x00);
+write_data(0x33);
+write_data(0x33);
+
+write_command(0xb7);
+write_data(0x35);
+
+write_command(0x3A);
+write_data(0x55);
+//---------------------------------ST7789S Power setting--------------------------------------//
+write_command(0xbb);
+write_data(0x30);//vcom
+
+write_command(0xc3);
+write_data(0x1C);//17调深浅
+
+write_command(0xc4);
+write_data(0x18);
+
+write_command(0xc6);
+write_data(0x0f);
+
+write_command(0xd0);
+write_data(0xa4);
+write_data(0xa2);
+//--------------------------------ST7789S gamma setting---------------------------------------//
+write_command(0xe0);
+write_data(0xf0);
+write_data(0x00);
+write_data(0x0a);
+write_data(0x10);
+write_data(0x12);
+write_data(0x1b);
+write_data(0x39);
+write_data(0x44);
+write_data(0x47);
+write_data(0x28);
+write_data(0x12);
+write_data(0x10);
+write_data(0x16);
+write_data(0x1b);
+
+write_command(0xe1);
+write_data(0xf0);
+write_data(0x00);
+write_data(0x0a);
+write_data(0x10);
+write_data(0x11);
+write_data(0x1a);
+write_data(0x3b);
+write_data(0x34);
+write_data(0x4e);
+write_data(0x3a);
+write_data(0x17);
+write_data(0x16);
+write_data(0x21);
+write_data(0x22);
+
+//*********SET RGB Interfae***************
+write_command(0xB0);
+write_data(0x11); //set RGB interface and DE mode.
+write_data(0x00);
+write_data(0x00);
+
+write_command(0xB1);
+write_data(0x40); // set DE mode ; SET Hs,Vs,DE,DOTCLK signal polarity
+write_data(0x00);
+write_data(0x00);
+
+write_command(0x3a);
+write_data(0x66); //18 RGB ,55-16BIT RGB
+
+//************************
+write_command(0x11);
+delay(120);      //Delay 120ms
+
+write_command(0x29); //display on
+write_command(0x2c);
+
+}
+//*********************************************************************************************
+void EnterSleep (void)
+{
+    write_command(0x28);
+    delay(20);
+    write_command(0x10);
+    RGB_OFF();
+
+  }
+
+//*********************************************************
+void ExitSleep (void)
+
+ {
+    RGB_ON();
+    delay(30);
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+
+   }
+
+
