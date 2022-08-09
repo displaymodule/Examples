@@ -5,4 +5,5 @@ comment device `Arduino_ST7789 tft = Arduino_ST7789（-1， TFT_RST， TFT_MOSI�
 
 You can refer to samples of the [Arduino-ST7789-Library-master/example](https://github.com/adafruit/Adafruit-ST7735-Library/tree/master/examples)；
 
-Connect `pins：13： SCL;11：SDA;10：CS;9： RES;8： DC. Arduino Adafruit-GFX Library： Adafruit-GFX-Library`
+Connect `pins：13： SCL;11：SDA;10：CS;9： RES; 8： DC`. 
+Arduino Adafruit-GFX Library： [Adafruit-GFX-Library](https://github.com/adafruit/Adafruit-GFX-Library)
