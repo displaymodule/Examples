@@ -1,0 +1,214 @@
+//VCI=3.3V. Please select the number of bits of the corresponding data line according to IM.
+//This product USES IC of 320*480, pay attention to the address of LCD writing window, not from 00, please pay attention to the Settings of 2A and 2B in the later code.
+//The read ID register is D3 and the return value is 7796
+//************************instruction*****************************
+void write_command (unsigned char y) // (uchar y,uchar x)
+{
+  unsigned char i;
+  cs=0;
+  rs=0;
+  for(i=0;i<8;i++)
+    {
+     scl=0;
+      if (y&0x80)
+        {
+          sdi=1;
+          }
+          else
+         {
+          sdi=0;
+      }
+       scl=1;
+      y=y<<1;
+    }
+cs=1;
+}
+//************************************data***************************
+void write_data(unsigned char w) // (uchar w, uchar v)
+{
+  unsigned char i;
+cs=0;
+rs=1;
+for(i=0;i<8;i++)
+ {
+  scl=0;
+     if (w&0x80)
+ {
+        sdi=1;
+    }
+         else
+       {
+         sdi=0;
+         } 
+        scl=1;
+      w=w<<1;
+    }
+cs=1;
+}
+/*************************************************/
+void initi(void)
+{ 
+   res=1;
+   delay(1);//MS
+   res=0;
+   delay(10);//MS
+   res=1;
+   delay(120);//MS
+//---------------------------------------------------------//
+write_command(0x11);//Exit_sleep_mode
+delay(120);//MS
+
+write_command(0x36); //Memory Data Access Control
+write_data(0x48); 
+
+write_command(0x3a); //Interface Pixel Format
+write_data(0x05);   
+
+write_command(0xf0); //Command Set Control
+write_data(0xc3); 
+
+write_command(0xf0);//Command Set Control 
+write_data(0x96); 
+
+write_command(0xB4);//Display Inversion Control 
+write_data(0x02);//01  1dot   00 column  02 2ot
+
+write_command(0xB7); //Entry Mode Set    
+write_data(0xC6);
+
+write_command(0xB9);     
+write_data(0x02);   
+write_data(0xE0);
+
+write_command(0xc0);//Power Control 1 
+write_data(0x80);  //AVDD ,AVCL
+write_data(0x71); //VGH=15V  VGL=-7,6V
+
+write_command(0xc1);//Power Control 2 
+write_data(0x17); //4.5V GVDD/GVCL
+
+write_command(0xc2);//Power Control 3
+write_data(0xa7); 
+
+write_command(0xc5);//VCOM Control
+write_data(0x16); //14
+
+write_command(0xe8);//Display Output Ctrl Adjust
+write_data(0x40); 
+write_data(0x8a); 
+write_data(0x00); 
+write_data(0x00); 
+write_data(0x29); 
+write_data(0x19); 
+write_data(0xa5); 
+write_data(0x33);
+
+write_command(0xE0);//GAMMA
+write_data(0xF0);
+write_data(0x11);
+write_data(0x17);
+write_data(0x0C);
+write_data(0x0B);
+write_data(0x08);
+write_data(0x42);
+write_data(0x44);
+write_data(0x57);
+write_data(0x3D);
+write_data(0x17);
+write_data(0x18);
+write_data(0x34);
+write_data(0x38);
+
+write_command(0xE1);//GAMMA
+write_data(0xF0);
+write_data(0x13);
+write_data(0x1C);
+write_data(0x0E);
+write_data(0x0C);
+write_data(0x15);
+write_data(0x41);
+write_data(0x43);
+write_data(0x57);
+write_data(0x25);
+write_data(0x13);
+write_data(0x14);
+write_data(0x35);
+write_data(0x36);
+
+write_command(0x21);//Enter_invert_mode
+
+//*******************240x400**********
+write_command(0x2A); //Frame rate control
+write_data(0x00);
+write_data(0x28); // Star 40
+write_data(0x01);
+write_data(0x17);//and  240
+
+write_command(0x2B); //Display function control
+write_data(0x00);
+write_data(0x28); // Star 40
+write_data(0x01);
+write_data(0xB7);//and  400
+//****************************************
+write_command(0xF0); 
+write_data(0x3C); 
+
+write_command(0xF0); 
+write_data(0x69);
+
+write_command(0x29);//DISPLAY ON
+delay(25);
+write_command(0x2C);//Write memory start
+
+}
+
+//************************************
+void LCD_Enter_Standby(void)
+{
+   write_command(0x28);
+   delay(10);
+   write_command(0x10);
+   delay(120);
+   }
+void LCD_Exit_Standby (void)
+{
+   write_command(0x11);// Exit Sleep/ Standby mode
+   delay(120);
+   write_command(0x29);
+  }
+//******Be sure to pay attention to the start and end coordinates of the window******
+void BlockWrite(void)
+
+{
+write_command(0x2A); //Frame rate control
+write_data(0x00);
+write_data(0x28); // Star 40
+write_data(0x01);
+write_data(0x17);//and  240
+
+write_command(0x2B); //Display function control
+write_data(0x00);
+write_data(0x28); // Star 40
+write_data(0x01);
+write_data(0xB7);//and  400
+
+write_command(0x2C);//Write memory start
+}
+ void BlockWrite(unsigned int Xstart,unsigned int Xend,unsigned int Ystart,unsigned int Yend) 
+{ Xstart=Xstart+0x28;
+	Xend=Xend+0x28;
+	Ystart=Ystart+0x28;
+	Yend=Yend+0x28;
+	WriteComm(0x2a);   
+	WriteData(Xstart>>8);
+	WriteData(Xstart&0xff);
+	WriteData(Xend>>8);
+	WriteData(Xend&0xff);
+
+	WriteComm(0x2b);   
+	WriteData(Ystart>>8);
+	WriteData(Ystart&0xff);
+	WriteData(Yend>>8);
+	WriteData(Yend&0xff);
+	
+	WriteComm(0x2c);
