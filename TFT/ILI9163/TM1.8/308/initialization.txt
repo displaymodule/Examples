@@ -1,0 +1,95 @@
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(50);
+//  ************* Start Initial Sequence **********
+  write_command(0x11); // Exit Sleep
+   delay(20);
+
+   write_command(0x26); //Set Default Gamma
+   write_data(0x00,0x04);
+
+   write_command(0xb1);//Set Frame Rate
+   write_data(0x00,0x0b);
+   write_data(0x00,0x14);
+
+   write_command(0xc0);//Set VRH1[4:0] & VC[2:0] for VCI1 & GVDD
+   write_data(0x00,0x08);
+   write_data(0x00,0x00);
+
+   write_command(0xc1); //Set BT[2:0] for AVDD & VCL & VGH & VGL
+   write_data(0x00,0x05);
+
+   write_command(0xc5); //Set VMH[6:0] & VML[6:0] for VOMH & VCOML
+   write_data(0x00,0x41);
+   write_data(0x00,0x30);
+
+   write_command(0xc7);
+   write_data(0x00,0xc1);
+
+   write_command(0x36); //Set Scanning Direction
+   write_data(0x00,0xc8);
+
+   write_command(0xec);//Set pumping clock frequency
+   write_data(0x00,0x1b);
+
+   write_command(0x3a); //Set Color Format
+   write_data(0x00,0x55);
+
+   write_command(0xf2); //E0h & E1h Enable/Disable
+   write_data(0x00,0x01);
+
+   write_command(0xe0); // P GAM
+   write_data(0x00,0x28); //P1
+   write_data(0x00,0x24); //P2
+   write_data(0x00,0x22); //P3
+   write_data(0x00,0x31); //P4
+   write_data(0x00,0x2b); //P5
+   write_data(0x00,0x0e); //P6
+   write_data(0x00,0x53); //P7
+   write_data(0x00,0xa5); //P8
+   write_data(0x00,0x42); //P9
+   write_data(0x00,0x16); //P10
+   write_data(0x00,0x18); //P11
+   write_data(0x00,0x12); //P12
+   write_data(0x00,0x1a); //P13
+   write_data(0x00,0x14); //P14
+   write_data(0x00,0x03); //P15
+
+   write_command(0xe1); // N GAM
+   write_data(0x00,0x17); //P1
+   write_data(0x00,0x1b); //P2
+   write_data(0x00,0x1d); //P3
+   write_data(0x00,0x0e); //P4
+   write_data(0x00,0x14); //P5
+   write_data(0x00,0x11); //P6
+   write_data(0x00,0x2c); //P7
+   write_data(0x00,0xa5); //P8
+   write_data(0x00,0x3d); //P9
+   write_data(0x00,0x09); //P10
+   write_data(0x00,0x27); //P11
+   write_data(0x00,0x2d); //P12
+   write_data(0x00,0x25);  //P13
+   write_data(0x00,0x2b);  //P14
+   write_data(0x00,0x3c); //P15
+
+   write_command(0x2A); //Column Address Set
+   write_data(0x00,0x00);
+   write_data(0x00,0x00);
+   write_data(0x00,0x00);
+   write_data(0x00,0x7f); //SET 127
+
+   write_command(0x2B);  //Page Address set
+   write_data(0x00,0x00);
+   write_data(0x00,0x00);
+   write_data(0x00,0x00);
+   write_data(0x00,0x9f);//SET159
+
+   write_command(0x29); // Display On
+   delay(100);
+
+}

@@ -1,0 +1,191 @@
+//NOTE:vci=3.3v
+//***********************16BIT*******************************************
+void write_command(unsigned int i)
+{
+     cs=0;
+     rd=1;
+     rs=0;
+     P2=i>>8;
+     P0=i;
+     rw=0;
+     rw=1;
+     cs=1;
+}
+
+void write_data(unsigned int i)
+{
+     cs=0;
+     rd=1;
+     rs=1;
+     P2=i>>8;
+     P0=i;
+     rw=0;;
+     rw=1;
+     cs=1;
+}
+void write_data1(byte data_h,data_l)
+{
+   cs=0;
+   rs=1;
+   rd=1;
+   rw=1;
+   P2=data_h;
+   P0=data_l;
+   rw=0;
+   rw=1;
+   cs=1;
+}
+//********************8BIT*****************************************
+void write_command(unsigned int i)
+{
+     cs=0;
+     rd=1;
+     rs=0;
+     P2=i;
+     rw=0;
+     rw=1;
+     cs=1;
+}
+
+void write_data(unsigned int i)
+{
+     cs=0;
+     rd=1;
+     rs=1;
+     P2=i>>8;
+     P2=i;
+     rw=0;;
+     rw=1;
+     cs=1;
+}
+//*******************************************
+void write_data1(byte data_h,data_l)
+{
+   cs=0;
+   rs=1;
+   rd=1;
+   P2=data_h;
+   rw=0;
+   rw=1;
+   P2=data_l;
+   rw=0;
+   rw=1;
+   cs=1;
+}
+//*************************************************************
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//************* Start Initial Sequence **********
+   write_command(0x26); //Set Default Gamma
+   write_data(0x04);
+
+   write_command(0xb1);//Set Frame Rate
+   write_data(0x0C);
+   write_data(0x14);
+
+   write_command(0xc0);//Set VRH1[4:0] & VC[2:0] for VCI1 & GVDD
+   write_data(0x0C);
+   write_data(0x05);
+
+   write_command(0xc1); //Set BT[2:0] for AVDD & VCL & VGH & VGL
+   write_data(0x02);
+
+   write_command(0xc5); //Set VMH[6:0] & VML[6:0] for VOMH & VCOML
+   write_data(0x29);
+   write_data(0x50);
+
+   write_command(0xc7);
+   write_data(0x40);
+
+   write_command(0x36); //Set Scanning Direction
+   write_data(0xc8);
+
+   write_command(0xb7); //Set Source Output Direction
+   write_data(0x00);
+
+   write_command(0x3a); //Set Color Format
+   write_data(0x05);
+
+   write_command(0xf2); //E0h & E1h Enable/Disable
+   write_data(0x01);
+
+   write_command(0xe0); // P GAM
+   write_data(0x36); //P1
+   write_data(0x29); //P2
+   write_data(0x12); //P3
+   write_data(0x22); //P4
+   write_data(0x1c); //P5
+   write_data(0x15); //P6
+   write_data(0x42); //P7
+   write_data(0xb7); //P8
+   write_data(0x2f); //P9
+   write_data(0x13); //P10
+   write_data(0x12); //P11
+   write_data(0x0a); //P12
+   write_data(0x11); //P13
+   write_data(0x0b); //P14
+   write_data(0x06); //P15
+
+   write_command(0xe1); // N GAM
+   write_data(0x09); //P1
+   write_data(0x16); //P2
+   write_data(0x2d); //P3
+   write_data(0x0d); //P4
+   write_data(0x13); //P5
+   write_data(0x15); //P6
+   write_data(0x40); //P7
+   write_data(0x48); //P8
+   write_data(0x53); //P9
+   write_data(0x0c); //P10
+   write_data(0x1d); //P11
+   write_data(0x25); //P12
+   write_data(0x2e);  //P13
+   write_data(0x34);  //P14
+   write_data(0x39); //P15
+
+
+   write_command(0x2a);//Set Column Address
+   write_data(0x00);
+   write_data(0x00);
+   write_data(0x00);
+   write_data(0x7f);
+
+   write_command(0x2b);//Set Page Address
+   write_data(0x00);
+   write_data(0x00);
+   write_data(0x00);
+   write_data(0x9f);
+
+  write_command(0x11); // Exit Sleep
+   delay(120);
+
+   write_command(0x29); // Display On
+   delay(25);
+   write_command(0x2C);
+
+}
+}
+//*********************************************************************************************
+void  LCD_Enter_Standby(void)
+{
+    write_command(0x28);
+    delay(20);
+    write_command(0x10);
+  }
+
+//*********************************************************
+void LCD_Exit_Standby (void)
+
+ {
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+
+   }
+//******************************
