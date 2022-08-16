@@ -1,0 +1,191 @@
+//VCI=3.3V,根据IM的选择用对应的数据线位数.
+//*********************16BIT*********************************
+void write_command(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=0;	 
+ 	 P2=i>>8;
+	 P0=i;
+	 rw=0;
+	 rw=1;
+	 cs=1; 
+}
+
+void write_data(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=1;	
+	 P2=i>>8;
+	 P0=i;
+	 rw=0;;
+	 rw=1;
+	 cs=1;
+}
+//********************8BIT****************************************
+void write_command(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=0;	 
+ 	 P2=i;
+	 rw=0;
+	 rw=1;
+	 cs=1; 
+}
+
+void write_data(unsigned int i)
+{
+	 cs=0;
+	 rd=1;
+	 rs=1;	
+	 P2=i>>8;
+	 P2=i;
+	 rw=0;;
+	 rw=1;
+	 cs=1;
+}
+
+/*************************************************/
+void initi(void)
+{ 
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//************************************************
+write_command(0x36); 
+write_data(0x00);
+
+write_command(0x3a); 
+write_data(0x05);
+
+//----------ST7789S Frame rate setting-------------------// 
+write_command(0xb2); 
+write_data(0x0c); 
+write_data(0x0c); 
+write_data(0x00); 
+write_data(0x33); 
+write_data(0x33); 
+
+write_command(0xb7); 
+write_data(0x35); 
+//-----------ST7789S Power setting---------------------// 
+write_command(0xbb); 
+write_data(0x38); 
+
+write_command(0xc0); 
+write_data(0x2c); 
+
+write_command(0xc2); 
+write_data(0x01);
+ 
+write_command(0xc3); 
+write_data(0x1d); 
+
+write_command(0xc4); 
+write_data(0x20);
+ 
+write_command(0xc6); 
+write_data(0x0f); 
+
+write_command(0xd0); 
+write_data(0xa4); 
+write_data(0xa1); 
+//---------------ST7789S gamma setting-----------------------// 
+write_command(0xe0); 
+write_data(0xd0); 
+write_data(0x1E); 
+write_data(0x24); 
+write_data(0x0A); 
+write_data(0x0A); 
+write_data(0x26); 
+write_data(0x44); 
+write_data(0x44); 
+write_data(0x57); 
+write_data(0x29); 
+write_data(0x14); 
+write_data(0x14); 
+write_data(0x30); 
+write_data(0x34); 
+
+write_command(0xe1); 
+write_data(0xd0); 
+write_data(0x1E); 
+write_data(0x23); 
+write_data(0x0A); 
+write_data(0x09); 
+write_data(0x25); 
+write_data(0x43); 
+write_data(0x33); 
+write_data(0x56); 
+write_data(0x28); 
+write_data(0x14); 
+write_data(0x14); 
+write_data(0x2F); 
+write_data(0x34); 
+
+write_command(0x21); 
+
+write_command(0x2A); //Frame rate control 240
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+write_data(0xEF);
+
+write_command(0x2B); //Display function control 240
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+write_data(0xeF);
+
+write_command(0x11); 
+delay(120);      //Delay 120ms 
+
+write_command(0x29); //display on
+delay(50);   
+write_command(0x2c); 
+  }
+
+//*********************************************************************************************
+void EnterSleep (void)
+{
+    write_command(0x28);
+    delay(20);
+    write_command(0x10);
+  
+  }
+
+//*********************************************************
+void ExitSleep (void)
+
+ {
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+}
+
+//************ST7789读red ID如下（MT6260)******************//
+kal_bool LCM_ID_check_ST7789S()
+{
+    kal_uint8 dummy, ST7789S_1, ST7789S_2, ST7789S_3;
+
+    MAIN_LCD_CtrlWrite(0x04);  //LCM ID
+    dummy = MAIN_LCD_DataRead;
+    ST7789S_1 = MAIN_LCD_DataRead;
+    ST7789S_2 = MAIN_LCD_DataRead;
+    ST7789S_3 = MAIN_LCD_DataRead;
+
+    if ((0x85== ST7789S_2) && (0x52 == ST7789S_3))
+     {
+#ifdef __FACTORY_GET_DRIVERS_INF__
+     LCM_INF="ST7789S ID=8552";
+#endif
+      return KAL_TRUE;
+    }
+    else
+      return KAL_FALSE;
+}
