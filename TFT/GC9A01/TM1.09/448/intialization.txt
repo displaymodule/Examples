@@ -1,0 +1,138 @@
+    LCD_CtrlWrite_ST7789S(0xFE);			 LCD_CtrlWrite_ST7789S(0xEF);  LCD_CtrlWrite_ST7789S(0xEB);	LCD_DataWrite_ST7789S(0x14);  LCD_CtrlWrite_ST7789S(0x84);			LCD_DataWrite_ST7789S(0x60); //40->60 0xb5 en  20200924  james LCD_CtrlWrite_ST7789S(0x85); LCD_DataWrite_ST7789S(0xFF);  LCD_CtrlWrite_ST7789S(0x86);            LCD_DataWrite_ST7789S(0xFF);  LCD_CtrlWrite_ST7789S(0x87);            LCD_DataWrite_ST7789S(0xFF); LCD_CtrlWrite_ST7789S(0x8E);        LCD_DataWrite_ST7789S(0xFF);  LCD_CtrlWrite_ST7789S(0x8F);     LCD_DataWrite_ST7789S(0xFF);  LCD_CtrlWrite_ST7789S(0x88);			LCD_DataWrite_ST7789S(0x0A); //LCD_CtrlWrite_ST7789S(0x89);			//LCD_DataWrite_ST7789S(0x23); ///spi 2data reg en LCD_CtrlWrite_ST7789S(0x8A);			LCD_DataWrite_ST7789S(0x00);  LCD_CtrlWrite_ST7789S(0x8B);			LCD_DataWrite_ST7789S(0x80);  LCD_CtrlWrite_ST7789S(0x8C);			LCD_DataWrite_ST7789S(0x01);  LCD_CtrlWrite_ST7789S(0x8D);			LCD_DataWrite_ST7789S(0x03); //99 en LCD_CtrlWrite_ST7789S(0xB5);   LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x09);//08->09  james 20200924 LCD_DataWrite_ST7789S(0x14); LCD_DataWrite_ST7789S(0x08); //��ɨ LCD_CtrlWrite_ST7789S(0xB6);			LCD_DataWrite_ST7789S(0x00); LCD_DataWrite_ST7789S(0x00); //GS  SS  0x20 LCD_CtrlWrite_ST7789S(0x36);			LCD_DataWrite_ST7789S(0x48); LCD_CtrlWrite_ST7789S(0x3A);			LCD_DataWrite_ST7789S(0x05);  LCD_CtrlWrite_ST7789S(0x90);			LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x08);  LCD_CtrlWrite_ST7789S(0xBD);			LCD_DataWrite_ST7789S(0x06); LCD_CtrlWrite_ST7789S(0xBC);			LCD_DataWrite_ST7789S(0x00);	 LCD_CtrlWrite_ST7789S(0xFF);			LCD_DataWrite_ST7789S(0x60); LCD_DataWrite_ST7789S(0x01); LCD_DataWrite_ST7789S(0x04); LCD_CtrlWrite_ST7789S(0xC3);			LCD_DataWrite_ST7789S(0x13); LCD_CtrlWrite_ST7789S(0xC4);			LCD_DataWrite_ST7789S(0x13); LCD_CtrlWrite_ST7789S(0xC9);			LCD_DataWrite_ST7789S(0x30); LCD_CtrlWrite_ST7789S(0xBE);			LCD_DataWrite_ST7789S(0x11);  LCD_CtrlWrite_ST7789S(0xE1); LCD_DataWrite_ST7789S(0x10); LCD_DataWrite_ST7789S(0x0E); LCD_CtrlWrite_ST7789S(0xDF);			LCD_DataWrite_ST7789S(0x21); LCD_DataWrite_ST7789S(0x0c); LCD_DataWrite_ST7789S(0x02); LCD_CtrlWrite_ST7789S(0xF0);   LCD_DataWrite_ST7789S(0x45); LCD_DataWrite_ST7789S(0x09); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x26); LCD_DataWrite_ST7789S(0x2A); LCD_CtrlWrite_ST7789S(0xF1);    LCD_DataWrite_ST7789S(0x43); LCD_DataWrite_ST7789S(0x70); LCD_DataWrite_ST7789S(0x72); LCD_DataWrite_ST7789S(0x36); LCD_DataWrite_ST7789S(0x37);  LCD_DataWrite_ST7789S(0x6F); LCD_CtrlWrite_ST7789S(0xF2);   LCD_DataWrite_ST7789S(0x45); LCD_DataWrite_ST7789S(0x09); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x26); LCD_DataWrite_ST7789S(0x2A); LCD_CtrlWrite_ST7789S(0xF3);   LCD_DataWrite_ST7789S(0x43); LCD_DataWrite_ST7789S(0x70); LCD_DataWrite_ST7789S(0x72); LCD_DataWrite_ST7789S(0x36); LCD_DataWrite_ST7789S(0x37); LCD_DataWrite_ST7789S(0x6F); LCD_CtrlWrite_ST7789S(0xED);	LCD_DataWrite_ST7789S(0x1B); LCD_DataWrite_ST7789S(0x0B);  LCD_CtrlWrite_ST7789S(0xAE);			LCD_DataWrite_ST7789S(0x77); LCD_CtrlWrite_ST7789S(0xCD);			LCD_DataWrite_ST7789S(0x63);		 LCD_CtrlWrite_ST7789S(0x70);			LCD_DataWrite_ST7789S(0x07); LCD_DataWrite_ST7789S(0x07); LCD_DataWrite_ST7789S(0x04); LCD_DataWrite_ST7789S(0x0E); LCD_DataWrite_ST7789S(0x0F); LCD_DataWrite_ST7789S(0x09); LCD_DataWrite_ST7789S(0x07); LCD_DataWrite_ST7789S(0x08); LCD_DataWrite_ST7789S(0x03);
+
+	LCD_CtrlWrite_ST7789S(0xE8);
+	LCD_DataWrite_ST7789S(0x34);
+	/////////////////////////////////////////////
+	LCD_CtrlWrite_ST7789S(0x60);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0x0B);
+	LCD_DataWrite_ST7789S(0x6D);
+	LCD_DataWrite_ST7789S(0x6D);
+
+	LCD_DataWrite_ST7789S(0x39);
+	LCD_DataWrite_ST7789S(0xF0);
+	LCD_DataWrite_ST7789S(0x6D);
+	LCD_DataWrite_ST7789S(0x6D);
+
+
+	LCD_CtrlWrite_ST7789S(0x61);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0xF4);
+	LCD_DataWrite_ST7789S(0x6D);
+	LCD_DataWrite_ST7789S(0x6D);
+
+	LCD_DataWrite_ST7789S(0x38);
+	//LCD_DataWrite_ST7789S(0xF7); //20200718
+	LCD_DataWrite_ST7789S(0xF7);
+	LCD_DataWrite_ST7789S(0x6D);
+	LCD_DataWrite_ST7789S(0x6D);
+	/////////////////////////////////////
+	LCD_CtrlWrite_ST7789S(0x62);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0x0D);
+	LCD_DataWrite_ST7789S(0x71);
+	LCD_DataWrite_ST7789S(0xED);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0x0F);
+	LCD_DataWrite_ST7789S(0x71);
+	LCD_DataWrite_ST7789S(0xEF);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x70);
+
+	LCD_CtrlWrite_ST7789S(0x63);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0x11);
+	LCD_DataWrite_ST7789S(0x71);
+	LCD_DataWrite_ST7789S(0xF1);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x38);
+	LCD_DataWrite_ST7789S(0x13);
+	LCD_DataWrite_ST7789S(0x71);
+	LCD_DataWrite_ST7789S(0xF3);
+	LCD_DataWrite_ST7789S(0x70);
+	LCD_DataWrite_ST7789S(0x70);
+	///////////////////////////////////////////////////////
+	LCD_CtrlWrite_ST7789S(0x64);
+	LCD_DataWrite_ST7789S(0x28);
+	LCD_DataWrite_ST7789S(0x29);
+	LCD_DataWrite_ST7789S(0xF1);
+	LCD_DataWrite_ST7789S(0x01);
+	LCD_DataWrite_ST7789S(0xF1);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x07);
+
+	//��ɨ
+	LCD_CtrlWrite_ST7789S(0x66);
+	LCD_DataWrite_ST7789S(0x3C);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0xCD);
+	LCD_DataWrite_ST7789S(0x67);
+	LCD_DataWrite_ST7789S(0x45);
+	LCD_DataWrite_ST7789S(0x45);
+	LCD_DataWrite_ST7789S(0x10);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x00);
+
+	LCD_CtrlWrite_ST7789S(0x67);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x3C);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x01);
+	LCD_DataWrite_ST7789S(0x54);
+	LCD_DataWrite_ST7789S(0x10);
+	LCD_DataWrite_ST7789S(0x32);
+	LCD_DataWrite_ST7789S(0x98);
+
+
+
+	LCD_CtrlWrite_ST7789S(0x74);
+	LCD_DataWrite_ST7789S(0x10);
+	LCD_DataWrite_ST7789S(0x45);	//85
+	LCD_DataWrite_ST7789S(0x80);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x00);
+	LCD_DataWrite_ST7789S(0x4E);
+	LCD_DataWrite_ST7789S(0x00);
+
+	LCD_CtrlWrite_ST7789S(0x98);
+	LCD_DataWrite_ST7789S(0x3e);
+	LCD_DataWrite_ST7789S(0x07);
+	LCD_CtrlWrite_ST7789S(0x99);	//bvee 2x
+	LCD_DataWrite_ST7789S(0x3e);
+	LCD_DataWrite_ST7789S(0x07);
+
+
+
+        LCD_CtrlWrite_ST7789S(0x35);
+        LCD_DataWrite_ST7789S(0x00);
+	LCD_CtrlWrite_ST7789S(0x21);
+
+	//LCD_CtrlWrite_ST7789S(0xe9);		//��3��2ͨ��
+	//LCD_DataWrite_ST7789S(0x08);
+	Delayms(120);
+	//--------end gamma setting--------------//
+
+LCD_CtrlWrite_ST7789S(0x11);
+Delayms(320);
+LCD_CtrlWrite_ST7789S(0x29);
+Delayms(120);
+//LCD_CtrlWrite_ST7789S(0x2C);
+//#endif
+
+
+LCD_CtrlWrite_ST7789S(0x2A);
+LCD_DataWrite_ST7789S(0x00);//Column address 0~240
+LCD_DataWrite_ST7789S(0x00);
+LCD_DataWrite_ST7789S(0x00);
+LCD_DataWrite_ST7789S(0xEF);
+LCD_CtrlWrite_ST7789S(0x2B);
+LCD_DataWrite_ST7789S(0x00);//Row address 0~240
+LCD_DataWrite_ST7789S(0x00);
+LCD_DataWrite_ST7789S(0x00);
+LCD_DataWrite_ST7789S(0xEF);
