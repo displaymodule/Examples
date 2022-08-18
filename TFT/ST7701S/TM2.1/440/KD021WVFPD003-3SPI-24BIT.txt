@@ -1,0 +1,346 @@
+//NOTE:VCC=3.3V,IOVCC=1.8-3.3V
+Display resolution:480*480
+params->dsi.vertical_sync_active=8
+params->dsi.vertical_backporch=10
+params->dsi.vertical_frontporch=20
+params->dsi.horizontal_sync_active=8
+params->dsi.horizontal_backporch=39
+params->dsi.horizontal_frontporch=20
+params->RGB_CLOCK=(17)
+Frame Rate=60HZ
+
+//****************************************************************
+void write_command (unsigned char y) // (uchar y,uchar x)
+{
+  unsigned char i;
+csb=0;
+sclb=0;
+sdi=0;
+sclb=1;
+for(i=0;i<8;i++)
+    {
+     sclb=0;      
+      if (y&0x80)
+       {
+          sdi=1;
+        }
+          else
+         {
+          sdi=0;
+         }
+       sclb=1;
+      y=y<<1;
+    }
+csb=1;
+}
+//***************************************************************
+void write_data(unsigned char w) // (uchar w, uchar v)
+{
+  unsigned char i;
+csb=0;
+sclb=0;
+sdi=1;
+sclb=1;
+for(i=0;i<8;i++)
+ {
+  sclb=0;
+     if (w&0x80)
+     {
+        sdi=1;
+       }
+          else
+        {
+         sdi=0;
+        }
+   sclb=1;
+   w=w<<1;
+    }
+csb=1;
+}
+
+/**********************LCD***************************/
+void initi(void)
+{
+   res=1;
+   delay(1);
+   res=0;
+   delay(10);
+   res=1;
+   delay(120);
+//***************************************************************//LCD SETING
+write_command(0xFF);
+write_data(0x77);
+write_data(0x01);
+write_data(0x00);
+write_data(0x00);
+write_data(0x10);
+
+write_command(0xC0);//Display Line Setting 
+write_data(0x3B);//Scan line	
+write_data(0x00);
+
+write_command(0xC1);//Porch Control   
+write_data(0x0B);	//VBP
+write_data(0x02);
+
+write_command(0xC2);// Inversion set
+write_data(0x07);//01 2-DOT 07-Column
+write_data(0x02);
+
+write_command(0xC3); //SET RGB MODE
+write_data(0x02); //02-DE MODE ,82-HV MODE	 PCLK N
+write_data(0x00);
+write_data(0x00);
+
+write_command(0xCC);
+write_data(0x10);
+
+write_command(0xB0); //Positive Voltage Gamma Control  
+write_data(0x00); // 255 
+write_data(0x11); // 251    
+write_data(0x16); // 247  down
+write_data(0x0e); // 239    
+write_data(0x11); // 231    
+write_data(0x06); // 203    
+write_data(0x05); // 175 
+write_data(0x09); // 147    
+write_data(0x08); // 108    
+write_data(0x21); // 80  
+write_data(0x06); // 52   
+write_data(0x13); // 24    
+write_data(0x10); // 16    
+write_data(0x29); // 8    down
+write_data(0x31); // 4    
+write_data(0x18); // 0   
+
+write_command(0xB1);// //Negative Voltage Gamma Control	   
+write_data(0x00);//  255 
+write_data(0x11);//  251
+write_data(0x16);//  247   down
+write_data(0x0e);//  239
+write_data(0x11);//  231
+write_data(0x07);//  203    
+write_data(0x05);//  175
+write_data(0x09);//  147  
+write_data(0x09);//  108  
+write_data(0x21);//  80 
+write_data(0x05);//  52   
+write_data(0x13);//  24 
+write_data(0x11);//  16 
+write_data(0x2a);//  8  down 
+write_data(0x31);//  4  
+write_data(0x18);//  0  
+//*******power set********//
+//PAGE2
+write_command(0xFF);
+write_data(0x77);
+write_data(0x01);
+write_data(0x00);
+write_data(0x00);
+write_data(0x11);
+
+write_command(0xB0);  //VOP  3.5375+ *x 0.0125
+write_data(0x6d);  //5D
+ 
+write_command(0xB1); 	//VCOM amplitude setting  
+write_data(0x37);  //
+  
+write_command(0xB2); 	//VGH Voltage setting  
+write_data(0x81);	//12V
+
+write_command(0xB3);//TEST Command Setting  
+write_data(0x80);
+
+write_command(0xB5); 	//VGL Voltage setting  
+write_data(0x43);	//-8.3V
+
+write_command(0xB7);//Power Control 1 
+write_data(0x85);
+
+write_command(0xB8);//Power Control 2
+write_data(0x20);
+
+write_command(0xC1);//Source pre_drive timing set1   
+write_data(0x78);
+
+write_command(0xC2);//Source EQ2 Setting  
+write_data(0x78);
+
+write_command(0xD0);
+write_data(0x88);
+//*********GIP SET*************//
+write_command(0xE0);
+write_data(0x00);
+write_data(0x00);
+write_data(0x02);
+
+write_command(0xE1);
+write_data(0x03);	
+write_data(0xA0);
+write_data(0x00);	
+write_data(0x00);
+write_data(0x04);	
+write_data(0xA0);
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);
+write_data(0x20);
+write_data(0x20);
+
+write_command(0xE2);
+write_data(0x00);	
+write_data(0x00);	  
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);
+
+write_command(0xE3);
+write_data(0x00);
+write_data(0x00);
+write_data(0x11);
+write_data(0x00);
+
+write_command(0xE4);
+write_data(0x22);
+write_data(0x00);
+
+write_command(0xE5);		
+write_data(0x05);	
+write_data(0xEC);	
+write_data(0xA0);
+write_data(0xA0);
+write_data(0x07);	
+write_data(0xEE);	
+write_data(0xA0);
+write_data(0xA0);
+write_data(0x00);
+write_data(0x00);	
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);	
+write_data(0x00);
+write_data(0x00);
+
+write_command(0xE6);
+write_data(0x00);
+write_data(0x00);
+write_data(0x11);
+write_data(0x00);
+
+write_command(0xE7);
+write_data(0x22);
+write_data(0x00);
+
+write_command(0xE8);		
+write_data(0x06);	
+write_data(0xED);	
+write_data(0xA0);
+write_data(0xA0);
+write_data(0x08);	
+write_data(0xEF);	
+write_data(0xA0); 
+write_data(0xA0);
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);	
+write_data(0x00);	
+write_data(0x00);
+write_data(0x00);
+
+write_command(0xEB);
+write_data(0x00); 	
+write_data(0x00);
+write_data(0x40);
+write_data(0x40);
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);  
+
+write_command(0xED);  
+write_data(0xFF); 
+write_data(0xFF);  
+write_data(0xFF); 	
+write_data(0xBA); 		
+write_data(0x0A); 	
+write_data(0xBF); 	
+write_data(0x45); 	
+write_data(0xFF); 
+write_data(0xFF);  
+write_data(0x54); 	
+write_data(0xFB); 	
+write_data(0xA0); 	
+write_data(0xAB); 	
+write_data(0xFF); 
+write_data(0xFF); 
+write_data(0xFF); 
+
+write_command(0xEF);
+write_data(0x10); 
+write_data(0x0D); 
+write_data(0x04); 
+write_data(0x08); 
+write_data(0x3F); 
+write_data(0x1F);
+//******GIP END*******//
+write_command(0xFF);
+write_data(0x77);
+write_data(0x01);
+write_data(0x00);
+write_data(0x00);
+write_data(0x13);
+
+write_command(0xEF);
+write_data(0x08);
+
+write_command(0xFF);
+write_data(0x77);
+write_data(0x01);
+write_data(0x00);
+write_data(0x00);
+write_data(0x00);
+
+write_command(0x36);
+write_data(0x00);
+
+write_command(0x3A);
+write_data(0x70);
+
+write_command(0x11);
+
+delay(120);
+//Display on
+write_command(0x29);                     
+delay(25);
+   
+
+}
+
+//*******************************************
+void EnterSleep (void)
+{
+    write_command(0x28);
+    delay(10);
+    write_command(0x10);
+  
+  }
+
+//*********************************************************
+void ExitSleep (void)
+
+ {
+    write_command(0x11);
+    delay(120);
+    write_command(0x29);
+
+   }
