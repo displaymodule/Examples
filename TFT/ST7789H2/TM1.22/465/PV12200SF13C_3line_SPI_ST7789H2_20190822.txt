@@ -1,0 +1,175 @@
+
+
+Void ST7789H2_Initial_Code(void) 
+{// VCC/IOVCC=2.8V 
+//************* Reset LCD Driver ****************// 
+SPI_RES = 1; 
+Delayms(1); // Delay 1ms 
+SPI_RES = 0; 
+Delayms(10); // Delay 10ms // This delay time is necessary 
+SPI_RES = 1; 
+Delayms(120); // Delay 120 ms 
+
+SPI_WriteComm(0x11);	//Sleep out
+Delayms(120); //Delay 120ms
+
+//--------------------------------------Display Setting------------------------------------------//
+SPI_WriteComm(0x11);
+Delayms(120); //Delay 120ms
+//--------------------------------------Display Setting------------------------------------------//
+SPI_WriteComm(0x36);
+SPI_WriteData(0x00);
+SPI_WriteComm(0x3a);
+SPI_WriteData(0x05);
+SPI_WriteComm(0x21);
+
+//------------------------------------Frame rate setting-------------------------------------//
+SPI_WriteComm(0xb2);
+SPI_WriteData(0x0c);
+SPI_WriteData(0x0c);
+SPI_WriteData(0x00);
+SPI_WriteData(0x33);
+SPI_WriteData(0x33);
+SPI_WriteComm(0xb7);
+SPI_WriteData(0x35);
+
+SPI_WriteComm(0xb7);
+SPI_WriteData(0x35);
+//----------------------------------------Power setting-----------------------------------------//
+SPI_WriteComm(0xbb);
+SPI_WriteData(0x1A);
+SPI_WriteComm(0xc0);
+SPI_WriteData(0x2c);
+SPI_WriteComm(0xc2);
+SPI_WriteData(0x01);
+SPI_WriteComm(0xc3);
+SPI_WriteData(0x0B);
+SPI_WriteComm(0xc4);
+SPI_WriteData(0x20);
+SPI_WriteComm(0xc6);
+SPI_WriteData(0x0f);
+SPI_WriteComm(0xd0);
+SPI_WriteData(0xa4);
+SPI_WriteData(0xa1);
+//------------------------------------------gamma setting----------------------------------------//
+SPI_WriteComm(0xe0);
+SPI_WriteData(0x00);
+SPI_WriteData(0x19);
+SPI_WriteData(0x1E);
+SPI_WriteData(0x0A);
+SPI_WriteData(0x09);
+SPI_WriteData(0x15);
+SPI_WriteData(0x3D);
+SPI_WriteData(0x44);
+SPI_WriteData(0x51);
+SPI_WriteData(0x12);
+SPI_WriteData(0x03);
+SPI_WriteData(0x00);
+SPI_WriteData(0x3F);
+SPI_WriteData(0x3F);
+SPI_WriteComm(0xe1);
+SPI_WriteData(0x00);
+SPI_WriteData(0x18);
+SPI_WriteData(0x1E);
+SPI_WriteData(0x0A);
+SPI_WriteData(0x09);
+SPI_WriteData(0x25);
+SPI_WriteData(0x3F);
+SPI_WriteData(0x43);
+SPI_WriteData(0x52);
+SPI_WriteData(0x33);
+SPI_WriteData(0x03);
+SPI_WriteData(0x00);
+SPI_WriteData(0x3f);
+SPI_WriteData(0x3f);
+
+SPI_WriteComm(0x29);
+Delayms(10);
+
+
+} 
+
+
+void SPI_WriteComm(unsigned char i)
+{
+    SPI_CS=0;
+
+    SPI_DI=0;
+
+	SPI_CLK=0;_nop_(); _nop_();_nop_();
+	SPI_CLK=1;_nop_();_nop_();_nop_();	
+	SPI_SendData(i);
+
+    SPI_CS=1;
+}
+
+void SPI_WriteData(unsigned char i)
+{
+    SPI_CS=0;
+
+    SPI_DI=1;
+
+	SPI_CLK=0;_nop_(); _nop_();_nop_();
+	SPI_CLK=1;_nop_();_nop_();_nop_();
+	SPI_SendData(i);
+    SPI_CS=1;
+}
+
+void SPI_SendData(unsigned char i)
+{  
+   unsigned char n;
+   
+   for(n=0; n<8; n++)			
+   {  
+	  if(i&0x80) SPI_DI=1;
+      	else SPI_DI=0;
+      i<<= 1;
+
+	  SPI_CLK=0;_nop_(); _nop_();_nop_();_nop_();
+      SPI_CLK=1;_nop_();_nop_();_nop_();_nop_();			
+   }
+}
+
+
+void DispColor(unsigned int color)
+{
+        unsigned int i,j;
+	unsigned char SPIDH,SPIDL;
+	BlockWrite(0,COL-1,0,ROW-1);   //COL=240 , ROW=204
+
+	SPIDH=color>>8;
+	SPIDL=color; 
+
+	for(i=0;i<ROW;i++)
+	{
+		for(j=0;j<COL;j++)
+		{    
+			
+		    SPI_WriteData(SPIDH);
+		    SPI_WriteData(SPIDL);
+		}
+	} 
+	
+}
+
+void BlockWrite(unsigned int Xstart,unsigned int Xend,unsigned int Ystart,unsigned int Yend) reentrant
+{
+
+        SPI_WriteComm(0x2a);   
+	SPI_WriteData(Xstart>>8);
+	SPI_WriteData(Xstart&0xff);
+	SPI_WriteData(Xend>>8);
+	SPI_WriteData(Xend&0xff);
+
+	SPI_WriteComm(0x2b);   
+	SPI_WriteData(Ystart>>8);
+	SPI_WriteData(Ystart&0xff);
+	SPI_WriteData(Yend>>8);
+	SPI_WriteData(Yend&0xff);
+
+        SPI_WriteComm(0x2C);
+
+}
+
+
+
