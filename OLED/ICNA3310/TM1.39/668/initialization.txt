@@ -1,0 +1,19 @@
+//turn on VCI=2.8V
+//turn on VDDIO=1.8V
+reset=low;
+delay 10ms
+reset=high;
+delay 120ms;
+//MIPI LP MODE
+FE 05;
+05 00;
+FE 07;
+07 4F;
+FE 0A;
+1C 1B;
+FE 00;
+35 00;
+11 00// Sleep out
+// MIPI HS MODE ON
+delay 300ms
+29 00 // Sleep out
